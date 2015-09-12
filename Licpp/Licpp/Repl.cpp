@@ -17,18 +17,64 @@ void Repl::Loop()
 		std::cout << ">";
 
 		//Read
-		std::cin >> input;
+		std::getline(std::cin, input);
 
 		//Evaluate
 		output = Repl::Evaluate(input);
 
 		//Print
-		std::cout << output << std::endl;
+		//std::cout << output << std::endl;
 	}
 }
 
 std::string Repl::Evaluate(std::string input)
 {
-	//TODO: Actually evaluate things
+	Repl::Tokenize(input);
 	return input;
+}
+//TODO: fix this 
+std::string* Repl::Tokenize(std::string input)
+{
+	std::string inputString = input;
+	int j = 0;
+	int openParen;
+	while (j < inputString.length())
+	{
+		openParen = inputString.find('(', j);
+		if (openParen != -1)
+		{
+			inputString.replace(openParen, 1, " ( ");
+			j = openParen + 2;
+		}
+		else
+		{
+			j = inputString.length();
+		}
+	}
+
+	j = 0;
+
+	while (j < inputString.length())
+	{
+		openParen = inputString.find(')', j);
+		if (openParen != -1)
+		{
+			inputString.replace(openParen, 1, " ) ");
+			j = openParen + 2;
+		}
+		else
+		{
+			j = inputString.length();
+		}
+	}
+
+	std::cout << inputString;
+
+	std::string* tokenizedArray = new std::string[inputString.length()];
+	std::istringstream tokenStream(inputString);
+	for (int i = 0; std::getline(tokenStream, tokenizedArray[i], ' '); i++)
+	{
+		std::cout << tokenizedArray[i] << std::endl;
+	}
+	return tokenizedArray;
 }
