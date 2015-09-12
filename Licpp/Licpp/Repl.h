@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <string>
-#include <sstream>
+#include <vector>
 
 class Repl
 {
@@ -12,6 +12,7 @@ public:
 	static void Loop();
 private:
 	static std::string Evaluate(std::string input);
-	static std::string* Tokenize(std::string input);
+	static std::vector<std::string> Tokenize(std::string input, char delimiter);
+	static std::string TokenizePrep(std::string input);
 };
 
